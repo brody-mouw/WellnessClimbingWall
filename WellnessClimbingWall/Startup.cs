@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using WellnessClimbingWall.Models;
+using WellnessClimbingWall.Data;
 
 namespace WellnessClimbingWall
 {
@@ -26,6 +28,9 @@ namespace WellnessClimbingWall
         {
             services.AddControllersWithViews();
             services.AddScoped<IRouteRepository, MockRouteRepository>();
+            services.AddDbContext<RouteContext>(options => 
+            options.UseSqlite(Configuration.GetConnectionString("RouteContext")));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
