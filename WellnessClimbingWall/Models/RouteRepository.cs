@@ -11,7 +11,6 @@ namespace WellnessClimbingWall.Models
     {
         private readonly AppDbContext _appDbContext;
 
-
         public RouteRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;

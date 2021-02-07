@@ -1,4 +1,5 @@
 ﻿@model RoutesListViewModel
+ 
 
 <h1>Routes</h1>
 
@@ -23,12 +24,15 @@
                 <td>@route.DateCreated</td>
                 <td>@route.Location</td>
                 <td>@route.Setter</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id ="@route.RouteId">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@route.RouteId">Delete</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
 
 <button type="button" class="btn btn-dark">Add Route</button>
-<button type="button" class="btn btn-secondary">Edit Route</button>
-<button type="button" class="btn btn-danger">Delete Route</button>
+
 
