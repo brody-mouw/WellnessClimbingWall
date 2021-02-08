@@ -10,7 +10,7 @@ namespace WellnessClimbingWall.Models
         public int RouteId { get; set; }
         public string Grade { get; set; }
         public string Color { get; set; }
-        public int Rope { get; set; }
+        public ushort Rope { get; set; }
         public DateTime DateCreated { get; set; }
         public string Location { get; set; }
         public string Setter { get; set; }
