@@ -29,13 +29,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="DateCreated" class="control-label"></label>
-                <input asp-for="DateCreated" class="form-control" />
+                <input type="datetime-local" value="currentDate" id="DateCreated" asp-for="DateCreated" class="form-control" />
                 <span asp-validation-for="DateCreated" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
+                <select name="location" id="location">
+                    <option value="None">None</option>
+                    <option value="North Wall">North Wall</option>
+                    <option value="Pinnicle">Pinnicle</option>
+                    <option value="Short North Wall">Short North Wall</option>
+                    <option value="Cave">Cave</option>
+                    <option value="Prow">Prow</option>
+                    <option value="Door">Door</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Setter" class="control-label"></label>
