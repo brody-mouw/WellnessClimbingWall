@@ -1,38 +1,61 @@
 ﻿@model RoutesListViewModel
- 
 
-<h1>Routes</h1>
+<style>
+    thead tr td{
+        text-align:center;
+    }
+    thead tr th:hover {
+        background-color: #07889b;
+    }
+</style>
 
-<table class="table table-striped table-dark">
-    <thead>
-        <tr>
-            <th scope="col">Grade</th>
-            <th scope="col">Color</th>
-            <th scope="col">Rope</th>
-            <th scope="col">Date put up</th>
-            <th scope="col">Location</th>
-            <th scope="col">Setter</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var route in Model.Routes)
-        {
+    <h1>Routes</h1>
+    <h3>Click on any header to sort routes by that category</h3>
+    <table class="table table-striped table-dark" id="routeTable">
+        <thead>
             <tr>
-                <td>@route.Grade</td>
-                <td>@route.Color</td>
-                <td>@route.Rope</td>
-                <td>@route.DateCreated</td>
-                <td>@route.Location</td>
-                <td>@route.Setter</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id ="@route.RouteId">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@route.RouteId">Delete</a>
-                </td>
+                <th class="thclass" scope="col"onclick="sortTable(0)">Grade
+                </th>
+                <th class="thclass" scope="col"onclick="sortTable(1)">Color
+                </th>
+                <th class="thclass" scope="col"onclick="sortTable(2)">Rope
+                </th>
+                <th class="thclass" scope="col"onclick="sortTable(3)">Date put up
+                </th>
+                <th class="thclass" scope="col"onclick="sortTable(4)">Location
+                </th>
+                <th class="thclass" scope="col"onclick="sortTable(5)">Setter
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var route in Model.Routes)
+            {
+                <tr>
+                    <td>@route.Grade</td>
+                    <td>@route.Color</td>
+                    <td>@route.Rope</td>
+                    <td>@route.DateCreated</td>
+                    <td>@route.Location</td>
+                    <td>@route.Setter</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@route.RouteId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@route.RouteId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<button type="button" class="btn btn-dark">Add Route</button>
+    <button type="button"
+            style="height:50px; width:150px; background-color:greenyellow; color:black; font-weight: bold;"
+            title="Add Route"
+            class="form-control"
+            onclick="location.href = '@Url.Action("Add", "route")'">
+        Add Route
+    </button>
 
+    <script>
+        $('#sortTable').DataTable();
+    </script>
 

@@ -103,14 +103,47 @@ namespace WellnessClimbingWall.Controllers
             }
             return View(route);
         }
+        //POST: Route/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, bool notUsed)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var route = await _context.Route.FindAsync(id);
             _context.Route.Remove(route);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(List));
+        }
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View(new Route());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Add(Route route)
+        {
+            if (ModelState.IsValid && route.Grade != null)
+            {
+                try
+                {
+                    _context.Update(route);
+                    _context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RouteExists(route.RouteId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("List");
+            }
+            return View(route);
         }
     }
 }
