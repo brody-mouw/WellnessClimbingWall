@@ -6,8 +6,8 @@ using WellnessClimbingWall.Models;
 
 namespace WellnessClimbingWall.ViewModels
 {
-    public class RoutesListViewModel
+    public class PatronListViewModel
     {
-        public IEnumerable<Route> Routes { get; set; }
+        public IEnumerable<Patron> Patrons { get; set; }
     }
 }
