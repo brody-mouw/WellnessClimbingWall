@@ -1,0 +1,30 @@
+﻿@model PatronListViewModel
+
+
+<body style="background-color: #ededed">
+    <h1>Patrons</h1>
+
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Time In</th>
+                <th scope="col">Certifications</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patron in Model.Patrons)
+            {
+                <tr>
+                    <td>@patron.ID</td>
+                    <td>@patron.Name</td>
+                    <td>@patron.TimeIn</td>
+                    <td>@patron.Certifications</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+
+
