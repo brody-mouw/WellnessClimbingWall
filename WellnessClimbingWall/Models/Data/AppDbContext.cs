@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using WellnessClimbingWall.Models;
 
@@ -61,5 +61,7 @@ namespace WellnessClimbingWall.Data
                 Setter = "Stacy"
             });
         }
+
+        public DbSet<WellnessClimbingWall.Models.Patron> Patron { get; set; }
     }
 }
