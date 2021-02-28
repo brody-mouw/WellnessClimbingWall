@@ -1,16 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using WellnessClimbingWall.Models;
 
 namespace WellnessClimbingWall.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public AppDbContext (DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
         public DbSet<Route> Route {get; set;}
+        public DbSet<Patron> Patron { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -61,7 +64,5 @@ namespace WellnessClimbingWall.Data
                 Setter = "Stacy"
             });
         }
-
-        public DbSet<WellnessClimbingWall.Models.Patron> Patron { get; set; }
     }
 }
