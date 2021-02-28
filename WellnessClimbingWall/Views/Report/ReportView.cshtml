@@ -1,8 +1,8 @@
-﻿@model Report
+﻿@model PatronListViewModel
 
 <body style="background-color: #ededed">
     <br>
-    <h2 style="text-align:center">Generate Report</h2>
+    <h2 style="text-align:Left">Generate Report with Date</h2>
     <form style="color:black;text-align:center;" action="/LoginController.cs">
         <br><label for="date1">Enter First Date:</label><br>
         <input type="text" id="date1" name="date1"><br>
@@ -10,4 +10,34 @@
         <input type="text" id="date2" name="date2"><br><br>
         <input type="submit" value="Submit"><br><br>
     </form>
+
+
+    <h2 style="text-align:Left">Generate Report with Patron</h2>
+    <form asp-controller="ReportController" asp-action="">
+        <p>
+            Search for Patron: <input type="text" name="SearchString" />
+            <input type="submit" value="Filter" />
+        </p>
+    </form>
+
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Certifications</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patron in Model.Patrons)
+            {
+                <tr>
+                    <td>@patron.ID</td>
+                    <td>@patron.Name</td>
+                    <td>@patron.Certifications</td>
+                    <td><a asp-action="Generate" asp-route-id="@patron.ID">Generate</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </body>
