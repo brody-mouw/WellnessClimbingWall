@@ -2,7 +2,7 @@
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-
+<body style="background-color : #ededed">
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
@@ -25,3 +25,4 @@ else
     </li>
 }
 </ul>
+</body>
