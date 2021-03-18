@@ -18,6 +18,5 @@ namespace WellnessClimbingWall.Models
         public DateTime DateCreated { get; set; }
         public string Location { get; set; }
         public string Setter { get; set; }
-
     }
 }
