@@ -13,9 +13,9 @@ namespace WellnessClimbingWall.Models
             {
                 return new List<Patron>
                 {
-                    new Patron {ID = 72343,Name = "Allison", TimeIn = "10:30", Certifications = "None"},
-                    new Patron {ID = 56666,Name = "Robert", TimeIn = "10:35", Certifications = "None"},
-                    new Patron {ID = 62465,Name = "Matthew", TimeIn = "11:00", Certifications = "Bouldering"},
+                    new Patron {ID = 72343,Name = "Allison", Certifications = "None"},
+                    new Patron {ID = 56666,Name = "Robert", Certifications = "None"},
+                    new Patron {ID = 62465,Name = "Matthew", Certifications = "Lead, Top Rope"},
                 };
             }
         }
