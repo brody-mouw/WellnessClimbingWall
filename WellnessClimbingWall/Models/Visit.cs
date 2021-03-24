@@ -7,7 +7,7 @@ namespace WellnessClimbingWall.Models
 {
     public class Visit : Patron
     {
-        DateTime timeIn;
-        DateTime timeOut;
+        public DateTime timeIn;
+        public DateTime timeOut;
     }
 }
