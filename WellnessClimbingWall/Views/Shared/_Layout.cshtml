@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@using System.Threading.Tasks
+@using WellnessClimbingWall.Auth
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IAuthorizationService AuthorizationService
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,6 +33,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-warning" asp-area="" asp-controller="Route" asp-action="List">Routes</a>
                         </li>
+                        @await Component.InvokeAsync("AdminMenu")
                         <li class="nav-item">
                             <a class="nav-link text-warning" asp-area="" asp-controller="Report" asp-action="ReportView">Reports</a>
                         </li>
