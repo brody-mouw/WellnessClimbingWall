@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WellnessClimbingWall.Migrations
 {
-    public partial class AddIdentity : Migration
+    public partial class RecreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,12 +53,29 @@ namespace WellnessClimbingWall.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TimeIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Certifications = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patron", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Route",
+                columns: table => new
+                {
+                    RouteId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Grade = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rope = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Setter = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Route", x => x.RouteId);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,8 +124,8 @@ namespace WellnessClimbingWall.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -152,8 +169,8 @@ namespace WellnessClimbingWall.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -165,6 +182,17 @@ namespace WellnessClimbingWall.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Route",
+                columns: new[] { "RouteId", "Color", "DateCreated", "Grade", "Location", "Rope", "Setter" },
+                values: new object[,]
+                {
+                    { 1, "Blue", new DateTime(2021, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), "5.5", "None", 21, "John" },
+                    { 2, "Red", new DateTime(2021, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "8.2", "None", 6, "Jack" },
+                    { 3, "Yellow", new DateTime(2021, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "4.9", "North Wall", 0, "Charlie" },
+                    { 4, "Black", new DateTime(2021, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "9.2", "None", 11, "Stacy" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -226,6 +254,9 @@ namespace WellnessClimbingWall.Migrations
 
             migrationBuilder.DropTable(
                 name: "Patron");
+
+            migrationBuilder.DropTable(
+                name: "Route");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
