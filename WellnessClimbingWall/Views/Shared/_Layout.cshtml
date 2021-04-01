@@ -33,17 +33,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-warning" asp-area="" asp-controller="Route" asp-action="List">Routes</a>
                         </li>
-                        @await Component.InvokeAsync("AdminMenu")
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrators"))
+                        {
+                            @await Component.InvokeAsync("AdminMenu")
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-warning" asp-area="" asp-controller="Report" asp-action="ReportView">Reports</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-warning" asp-area="" asp-controller="Patron" asp-action="PatronView">Patrons</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="AdminView">Admin</a>
-                        </li>
-                        <partial name="_LoginPartial">
+                        @await Html.PartialAsync("_LoginPartial")
                     </ul>
                 </div>
             </div>
