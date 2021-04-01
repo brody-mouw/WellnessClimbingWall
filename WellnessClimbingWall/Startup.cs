@@ -42,6 +42,8 @@ namespace WellnessClimbingWall
                 .AddEntityFrameworkStores<AppDbContext>();
 
             //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,9 +63,12 @@ namespace WellnessClimbingWall
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            
             app.UseAuthentication();
+            app.UseAuthorization();
+            
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

@@ -7,9 +7,11 @@ using WellnessClimbingWall.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using WellnessClimbingWall.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WellnessClimbingWall.Controllers
 {
+    [Authorize(Roles = "Administrators, Staff")]
     public class PatronController : Controller
     {
         private readonly IPatronRepository _patronRepository;
