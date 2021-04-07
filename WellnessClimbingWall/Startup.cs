@@ -34,6 +34,7 @@ namespace WellnessClimbingWall
 
             services.AddScoped<IRouteRepository, RouteRepository>();
             services.AddScoped<IPatronRepository, PatronRepository>();
+            services.AddScoped<IVisitRepository, VisitRepository>();
 
             services.AddDbContext<AppDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

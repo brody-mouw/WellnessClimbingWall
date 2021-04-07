@@ -15,6 +15,7 @@ namespace WellnessClimbingWall.Data
         }
         public DbSet<Route> Route {get; set;}
         public DbSet<Patron> Patron { get; set; }
+        public DbSet<Visit> Visit { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -63,6 +64,15 @@ namespace WellnessClimbingWall.Data
                 Location = "None", 
                 Rope = 11, 
                 Setter = "Stacy"
+            });
+
+            modelBuilder.Entity<Visit>().HasData(new Visit
+            {
+                ID = 112233,
+                Name = "Chester",
+                Certifications = "Belay",
+                timeIn = DateTime.Now,
+                timeOut = DateTime.Now,
             });
         }
     }

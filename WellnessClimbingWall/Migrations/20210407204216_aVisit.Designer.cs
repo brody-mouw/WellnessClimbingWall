@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WellnessClimbingWall.Data;
 
 namespace WellnessClimbingWall.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210407204216_aVisit")]
+    partial class aVisit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,12 +227,18 @@ namespace WellnessClimbingWall.Migrations
                     b.Property<string>("Certifications")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
                     b.ToTable("Patron");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Patron");
                 });
 
             modelBuilder.Entity("WellnessClimbingWall.Models.Route", b =>
@@ -307,35 +315,16 @@ namespace WellnessClimbingWall.Migrations
 
             modelBuilder.Entity("WellnessClimbingWall.Models.Visit", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasBaseType("WellnessClimbingWall.Models.Patron");
 
-                    b.Property<string>("Certifications")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("timeIn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("timeOut")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Visit");
+                    b.HasDiscriminator().HasValue("Visit");
 
                     b.HasData(
                         new
                         {
                             ID = 112233,
                             Certifications = "Belay",
-                            Name = "Chester",
-                            timeIn = new DateTime(2021, 4, 7, 16, 15, 41, 268, DateTimeKind.Local).AddTicks(8024),
-                            timeOut = new DateTime(2021, 4, 7, 16, 15, 41, 272, DateTimeKind.Local).AddTicks(2930)
+                            Name = "Chester"
                         });
                 });
 
