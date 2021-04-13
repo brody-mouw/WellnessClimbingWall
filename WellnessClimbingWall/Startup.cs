@@ -64,7 +64,7 @@ namespace WellnessClimbingWall
             app.UseStaticFiles();
 
             app.UseRouting();
-            DbInitializer.Seed(app);
+           // DbInitializer.Seed(app);
 
             app.UseAuthentication();
             app.UseAuthorization();
