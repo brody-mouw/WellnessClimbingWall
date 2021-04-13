@@ -74,14 +74,6 @@ namespace WellnessClimbingWall.Data
                 timeIn = DateTime.Now,
                 timeOut = DateTime.Now,
             });
-
-            modelBuilder.Entity<ApplicationUser>().HasData(new User
-            {
-                Username = "Admin",
-                PW = "Password1!",
-                AccessLevel = User.AccessType.admin,
-                ID = 1,
-            });
         }
     }
 }
