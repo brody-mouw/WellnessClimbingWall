@@ -80,6 +80,7 @@ namespace WellnessClimbingWall.Data
                 Username = "Admin",
                 PW = "Password1!",
                 AccessLevel = User.AccessType.admin,
+                ID = 1,
             });
         }
     }
