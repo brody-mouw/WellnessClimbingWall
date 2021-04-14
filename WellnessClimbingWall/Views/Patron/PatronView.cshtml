@@ -47,7 +47,7 @@
                         <tbody id="patronTableBody">
                             @foreach (Patron patron in Model.Patrons)
                             {
-                                <tr>
+                                <tr id="@patron.ID">    
                                     <td>@patron.ID</td>
                                     <td>@patron.Name</td>
                                     <td>@patron.Certifications</td>
@@ -154,26 +154,18 @@
             var Name = currentRow.find("td:eq(1)").text();
             var Certs = currentRow.find("td:eq(2)").text();
 
-            $('#checkInList tr').each(function () {
-                var compare_row = $(this);
+            $('#' + ID).hide();
 
-                var compare_row_ID = compare_row.find("td:nth-child(0)").text();
-
-                if (ID == compare_row_ID) {
-                    alert('Patron already Checked In');
-                }
-                else {
-                    $('table[id="checkInList"]').append('<tr><td>' + ID + '<td>' + Name + '<td>' + currentTime + '<td>' + Certs + '<td>'
-                        //+ '<button class="btn btn-primary" asp-action="Edit" asp-route-id="patron.ID">Edit</button>'
-                        + '<button class="btn btn-danger remove" type="button"> Checkout </button>');
-                }
-            })
+            $('table[id="checkInList"]').append('<tr><td>' + ID + '<td>' + Name + '<td>' + currentTime + '<td>' + Certs + '<td>'
+                //+ '<button class="btn btn-primary" asp-action="Edit" asp-route-id="patron.ID">Edit</button>'
+                + '<button class="btn btn-danger remove" type="button"> Checkout </button>');
         });
 
 
         $('#checkInList').on("click", "button.remove", function () {
+            ID = $(this).closest("tr").find("td:eq(0)").text();
+            $('#' + ID).show();
             $(this).closest('tr').remove();
-            //alert("Removed Entity");
         });
     </script>
 }
