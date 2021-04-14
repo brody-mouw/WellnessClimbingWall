@@ -89,7 +89,9 @@ namespace WellnessClimbingWall.Data
             var appUser = new ApplicationUser
             {
                 Id = USER_ID,
-                UserName = "Admin",
+                UserName = "Administrator",
+                Email = "temp@admin.com",
+                NormalizedUserName = "Administrator",
            };
 
             //set user password

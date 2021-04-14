@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WellnessClimbingWall.Data;
 
 namespace WellnessClimbingWall.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210414144626_newAdmin")]
+    partial class newAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,8 +50,8 @@ namespace WellnessClimbingWall.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7cfaa566-1a51-4061-8fcd-40f1191003ef",
-                            ConcurrencyStamp = "5d38058b-10d4-43c7-b829-73da4acdcbd9",
+                            Id = "91f817ac-6ad4-4b96-8c6f-2dedb9a13480",
+                            ConcurrencyStamp = "fc78e368-8ede-4f75-bfa3-a356cd2f24fb",
                             Name = "Administrators",
                             NormalizedName = "Admin"
                         });
@@ -142,8 +144,8 @@ namespace WellnessClimbingWall.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "2bdced9e-a7a1-4d88-8209-5636a772fcdf",
-                            RoleId = "7cfaa566-1a51-4061-8fcd-40f1191003ef"
+                            UserId = "68221243-01f4-4850-bb84-b4d37f6d21fb",
+                            RoleId = "91f817ac-6ad4-4b96-8c6f-2dedb9a13480"
                         });
                 });
 
@@ -233,16 +235,15 @@ namespace WellnessClimbingWall.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2bdced9e-a7a1-4d88-8209-5636a772fcdf",
+                            Id = "68221243-01f4-4850-bb84-b4d37f6d21fb",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a66972a1-dc0a-41a5-a969-7b5253d9dda7",
+                            ConcurrencyStamp = "a9d57e90-48ae-4cf2-b309-3d1140b7577d",
                             Email = "temp@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedUserName = "Administrator",
-                            PasswordHash = "AQAAAAEAACcQAAAAEInuLQyyI95cq4bpZErF1sP3BveaQuQPz05BD/n1pTOae8gGbAjzt2J5qLypjvh3AA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMNHP8rDaXDC5HL+udMvbf21Dri0myqLlZUSluEbCqkeFh+wChAwGx2oinotUK5Eeg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7cc6d3b8-b764-4808-922b-c5c5a0433202",
+                            SecurityStamp = "1e082522-8a9a-44f2-b6bd-2f7585829b7e",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -367,8 +368,8 @@ namespace WellnessClimbingWall.Migrations
                             ID = 112233,
                             Certifications = "Belay",
                             Name = "Chester",
-                            timeIn = new DateTime(2021, 4, 14, 10, 12, 18, 572, DateTimeKind.Local).AddTicks(7879),
-                            timeOut = new DateTime(2021, 4, 14, 10, 12, 18, 575, DateTimeKind.Local).AddTicks(3551)
+                            timeIn = new DateTime(2021, 4, 14, 9, 46, 25, 225, DateTimeKind.Local).AddTicks(3334),
+                            timeOut = new DateTime(2021, 4, 14, 9, 46, 25, 228, DateTimeKind.Local).AddTicks(5731)
                         });
                 });
 
