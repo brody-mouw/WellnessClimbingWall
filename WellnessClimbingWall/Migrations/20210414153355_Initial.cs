@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WellnessClimbingWall.Migrations
 {
-    public partial class RecreateDb : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -79,6 +79,22 @@ namespace WellnessClimbingWall.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Visit",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Certifications = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    timeIn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    timeOut = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Visit", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -124,8 +140,8 @@ namespace WellnessClimbingWall.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -169,8 +185,8 @@ namespace WellnessClimbingWall.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -185,6 +201,16 @@ namespace WellnessClimbingWall.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "2697de2e-9015-4bc2-8e5c-fcb38bfbb7f5", "da0feda6-4f88-4568-bdb7-4357ef3b6cc3", "Administrators", "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "e4afcaa4-5b54-4e27-b815-237ec9c2c2ce", 0, "78f89a20-d04f-40b4-950f-2a22170eabb1", "temp@admin.com", false, false, null, null, "Administrator", "AQAAAAEAACcQAAAAEMzhGjpOu2i4Bq88fn/SjLpDKYDalyUzIz+L/KUU7vu1xgbJV7MFwNv66d25Yco/Yg==", null, false, "47c29bec-50c2-403b-b2e3-ec15a586c610", false, "Administrator" });
+
+            migrationBuilder.InsertData(
                 table: "Route",
                 columns: new[] { "RouteId", "Color", "DateCreated", "Grade", "Location", "Rope", "Setter" },
                 values: new object[,]
@@ -194,6 +220,16 @@ namespace WellnessClimbingWall.Migrations
                     { 3, "Yellow", new DateTime(2021, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "4.9", "North Wall", 0, "Charlie" },
                     { 4, "Black", new DateTime(2021, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "9.2", "None", 11, "Stacy" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Visit",
+                columns: new[] { "ID", "Certifications", "Name", "timeIn", "timeOut" },
+                values: new object[] { 112233, "Belay", "Chester", new DateTime(2021, 4, 14, 10, 33, 55, 187, DateTimeKind.Local).AddTicks(7816), new DateTime(2021, 4, 14, 10, 33, 55, 191, DateTimeKind.Local).AddTicks(915) });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "2697de2e-9015-4bc2-8e5c-fcb38bfbb7f5", "e4afcaa4-5b54-4e27-b815-237ec9c2c2ce" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -257,6 +293,9 @@ namespace WellnessClimbingWall.Migrations
 
             migrationBuilder.DropTable(
                 name: "Route");
+
+            migrationBuilder.DropTable(
+                name: "Visit");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
