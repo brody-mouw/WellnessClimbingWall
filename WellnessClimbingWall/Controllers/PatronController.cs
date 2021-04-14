@@ -15,14 +15,12 @@ namespace WellnessClimbingWall.Controllers
         private readonly IPatronRepository _patronRepository;
         private readonly AppDbContext _context;
         //Add visit repository
-        private List<Visit> visitList;      //Display for table
 
 
         public PatronController(IPatronRepository patronRepository, AppDbContext context)
         {
             _patronRepository = patronRepository;
             _context = context;
-            visitList = new List<Visit>();
         }
 
         public ViewResult PatronView()
@@ -30,37 +28,13 @@ namespace WellnessClimbingWall.Controllers
             PatronListViewModel patronListViewModel = new PatronListViewModel();
             patronListViewModel.Patrons = _patronRepository.AllPatrons;
 
-            ViewData["visitList"] = visitList;
-
             return View(patronListViewModel);
         }
-        [HttpGet]
-        [Route("/Patron/CheckIn/{id}")]
-        public IActionResult CheckIn(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                var patron = _context.Patron.Find(id);
-                if (!visitList.Any(p => p.ID == patron.ID))     //If the current displayed list already has the patron, don't add them
-                {
-                    Visit newVisit = new Visit();
-                    newVisit.ID = patron.ID;
-                    newVisit.Name = patron.Name;
-                    newVisit.Certifications = patron.Certifications;
-                    newVisit.timeIn = DateTime.Now;
-                    visitList.Add(newVisit);
-                }
-            }
-            return View();
-        }
+
         [HttpGet]
         public IActionResult Add()
         {
-            return View(new Route());
+            return PartialView("_AddPatronView", new Patron());
         }
 
         [HttpPost]
@@ -71,10 +45,58 @@ namespace WellnessClimbingWall.Controllers
             {
                 try
                 {
+                    var insertPatron = patron;
+                    insertPatron.Certifications = "None";
+                    _context.Update(insertPatron);
+                    _context.SaveChanges();
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PatronExists(patron.ID))
+                    {
+                        throw;
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("PatronView");
+            }
+            return View(patron);
+        }
+        [HttpGet]
+        public IActionResult Edit(int ?ID)
+        { 
+            if(ID == null)
+            {
+                return NotFound();
+            }
+            Patron patron = _context.Patron.Find(ID);
+            if(patron == null)
+            {
+                return NotFound();
+            }
+            return PartialView("EditPatron", patron);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int ID, Patron patron)
+        {
+            if(ID != patron.ID)
+            {
+                return NotFound();
+            }
+
+            if(ModelState.IsValid)
+            {
+                try
+                {
                     _context.Update(patron);
                     _context.SaveChanges();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch(DbUpdateConcurrencyException)
                 {
                     if (!PatronExists(patron.ID))
                     {
@@ -95,7 +117,7 @@ namespace WellnessClimbingWall.Controllers
             return _context.Patron.Any(e => e.ID == id);
         }
 
-        public void CheckOut(Patron patron)
+        public void CheckOut(Patron patron, DateTime timeIn)
         {
             if (patron == null)
             {
@@ -103,10 +125,9 @@ namespace WellnessClimbingWall.Controllers
             }
             else
             {
-                Visit result = visitList.Find(x => x.ID == patron.ID);
+                Visit result = new Visit { Name = patron.Name, ID = patron.ID, Certifications = patron.Certifications, timeIn = timeIn };
                 result.timeOut = DateTime.Now;
                 //Save to Visit Database visitContext.Add(result)
-                visitList.Remove(result);
             }
         }
     }

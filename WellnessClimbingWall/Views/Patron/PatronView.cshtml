@@ -1,16 +1,28 @@
 ﻿@model PatronListViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@{
-    var visitList = (List<Visit>)ViewData["visitList"];
-}
+
+<head>
+    <link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+    <script src="~/js/bootstrap-table-cookie.js"></script>
+    <script src="~/js/bootstrap-table.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+</head>
 
 <body style="background-color: #ededed">
     <h1>Patrons</h1>
+
     <!--Modal Buttons-->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#patronList"> Check in </button>
-    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#registerPatron"> Register Patron </button>
-    <!--Modal #1-->
-    <div class="modal fade" id="patronList">
+    <button type="button" href="javascript:void(0);" class="btn btn-secondary" data-toggle="ajax-modal" data-target="#registerPatron"
+            data-url="@Url.Action("Add","Patron")">
+        Register Patron
+    </button>
+
+
+    <!--Modal For Checking In patrons-->
+    <div class="modal fade" id="patronList" width="100%">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -21,15 +33,18 @@
                 </div>
 
                 <div class="modal-body">
-                    <table class="table table-striped table-dark" id="patronTable">
+                    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                    <br>
+                    <table class="table table-striped table-dark"
+                           id="patronTable">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Certifications</th>
+                                <th data-field="ID">ID</th>
+                                <th data-field="Name">Name</th>
+                                <th data-field="Certs">Certifications</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="patronTableBody">
                             @foreach (Patron patron in Model.Patrons)
                             {
                                 <tr>
@@ -37,12 +52,11 @@
                                     <td>@patron.Name</td>
                                     <td>@patron.Certifications</td>
                                     <td>
-                                        <!--Call CheckIn method passing in patron-->
-                                        <a asp-action="CheckIn" 
-                                           asp-controller="Patron" 
-                                           asp-route-id="@patron.ID">
-                                           Check In
-                                        </a>
+                                        <button type="button" href="javascript:void(0);" class="btn btn-secondary" data-toggle="ajax-modal" data-target="#editPatron"
+                                                data-url="@Url.Action($"Edit/{patron.ID}")">
+                                            Edit
+                                        </button>
+                                            <button class="btn btn-primary patronListButton">Check In</button>
                                     </td>
                                 </tr>
 
@@ -57,60 +71,112 @@
             </div>
         </div>
     </div>
-    <!--Modal #2-->
+
+    <!--Modal For Creating Patron-->
     <div class="modal fade" id="registerPatron">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="checkIn">Register Patron</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>x</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>ID</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
-                </div>
+                <div id="addPatronModal"></div>
             </div>
         </div>
     </div>
 
+    <!--Modal For Editing Patron-->
 
-    <table class="table table-striped table-dark">
+
+    <!--Modal For Checked In Patrons-->
+    <table class="table table-striped table-dark"
+           id="checkInList"
+           data-cookie="true"
+           data-cookie-id-table="savePatronTable"
+           data-pagination="true"
+           data-search="true">
         <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Time In</th>
-                <th scope="col">Certifications</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Time In</th>
+                <th>Certifications</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach (var patron in visitList)
-            {
-                <tr>
-                    <td>@patron.ID</td>
-                    <td>@patron.Name</td>
-                    <td>@patron.timeIn</td>
-                    <td>@patron.Certifications</td>
-                    <td><button class="btn-danger"> Check Out </button></td>
-                </tr>
-            }
-        </tbody>
+        <!--This is where the patrons should go-->
     </table>
 </body>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        var AddPostBackURL = '/Patron/Add';
+        $(function () {
+            $('button[data-toggle="ajax-modal"]').click(function () {
+                var $buttonClicked = $(this);
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: AddPostBackURL,
+                    success: function (data) {
+                        $('#addPatronModal').html(data);
+                        $('#registerPatron').modal(options);
+                        $('#registerPatron').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#patronTableBody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        var d = new Date();
+        $('.patronListButton').click(function () {
+            var currentRow = $(this).closest("tr");
+
+            var hh = d.getHours();
+            var mm = d.getMinutes();
+
+            hh = hh < 10 ? '0' + hh : hh;
+            mm = mm < 10 ? '0' + mm : mm;
+
+            var currentTime = hh + ":" + mm;
+            var ID = currentRow.find("td:eq(0)").text();
+            var Name = currentRow.find("td:eq(1)").text();
+            var Certs = currentRow.find("td:eq(2)").text();
+
+            $('#checkInList tr').each(function () {
+                var compare_row = $(this);
+
+                var compare_row_ID = compare_row.find("td:nth-child(0)").text();
+
+                if (ID == compare_row_ID) {
+                    alert('Patron already Checked In');
+                }
+                else {
+                    $('table[id="checkInList"]').append('<tr><td>' + ID + '<td>' + Name + '<td>' + currentTime + '<td>' + Certs + '<td>'
+                        //+ '<button class="btn btn-primary" asp-action="Edit" asp-route-id="patron.ID">Edit</button>'
+                        + '<button class="btn btn-danger remove" type="button"> Checkout </button>');
+                }
+            })
+        });
+
+
+        $('#checkInList').on("click", "button.remove", function () {
+            $(this).closest('tr').remove();
+            //alert("Removed Entity");
+        });
+    </script>
+}
 
 
 
