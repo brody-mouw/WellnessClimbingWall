@@ -48,8 +48,8 @@ namespace WellnessClimbingWall.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7cfaa566-1a51-4061-8fcd-40f1191003ef",
-                            ConcurrencyStamp = "5d38058b-10d4-43c7-b829-73da4acdcbd9",
+                            Id = "2697de2e-9015-4bc2-8e5c-fcb38bfbb7f5",
+                            ConcurrencyStamp = "da0feda6-4f88-4568-bdb7-4357ef3b6cc3",
                             Name = "Administrators",
                             NormalizedName = "Admin"
                         });
@@ -142,8 +142,8 @@ namespace WellnessClimbingWall.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "2bdced9e-a7a1-4d88-8209-5636a772fcdf",
-                            RoleId = "7cfaa566-1a51-4061-8fcd-40f1191003ef"
+                            UserId = "e4afcaa4-5b54-4e27-b815-237ec9c2c2ce",
+                            RoleId = "2697de2e-9015-4bc2-8e5c-fcb38bfbb7f5"
                         });
                 });
 
@@ -233,16 +233,16 @@ namespace WellnessClimbingWall.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2bdced9e-a7a1-4d88-8209-5636a772fcdf",
+                            Id = "e4afcaa4-5b54-4e27-b815-237ec9c2c2ce",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a66972a1-dc0a-41a5-a969-7b5253d9dda7",
+                            ConcurrencyStamp = "78f89a20-d04f-40b4-950f-2a22170eabb1",
                             Email = "temp@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "Administrator",
-                            PasswordHash = "AQAAAAEAACcQAAAAEInuLQyyI95cq4bpZErF1sP3BveaQuQPz05BD/n1pTOae8gGbAjzt2J5qLypjvh3AA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMzhGjpOu2i4Bq88fn/SjLpDKYDalyUzIz+L/KUU7vu1xgbJV7MFwNv66d25Yco/Yg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7cc6d3b8-b764-4808-922b-c5c5a0433202",
+                            SecurityStamp = "47c29bec-50c2-403b-b2e3-ec15a586c610",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -367,8 +367,8 @@ namespace WellnessClimbingWall.Migrations
                             ID = 112233,
                             Certifications = "Belay",
                             Name = "Chester",
-                            timeIn = new DateTime(2021, 4, 14, 10, 12, 18, 572, DateTimeKind.Local).AddTicks(7879),
-                            timeOut = new DateTime(2021, 4, 14, 10, 12, 18, 575, DateTimeKind.Local).AddTicks(3551)
+                            timeIn = new DateTime(2021, 4, 14, 10, 33, 55, 187, DateTimeKind.Local).AddTicks(7816),
+                            timeOut = new DateTime(2021, 4, 14, 10, 33, 55, 191, DateTimeKind.Local).AddTicks(915)
                         });
                 });
 
