@@ -15,6 +15,7 @@ namespace WellnessClimbingWall.Data
         }
         public DbSet<Route> Route {get; set;}
         public DbSet<Patron> Patron { get; set; }
+        public DbSet<Visit> Visit { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -63,6 +64,46 @@ namespace WellnessClimbingWall.Data
                 Location = "None", 
                 Rope = 11, 
                 Setter = "Stacy"
+            });
+
+            modelBuilder.Entity<Visit>().HasData(new Visit
+            {
+                ID = 112233,
+                Name = "Chester",
+                Certifications = "Belay",
+                timeIn = DateTime.Now,
+                timeOut = DateTime.Now,
+            });
+
+            var ROLE_ID = Guid.NewGuid().ToString();
+            var USER_ID = Guid.NewGuid().ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Name = "Administrators",
+                NormalizedName = "Admin",
+                Id = ROLE_ID,
+            });
+
+            //create user
+            var appUser = new ApplicationUser
+            {
+                Id = USER_ID,
+                UserName = "Admin",
+           };
+
+            //set user password
+            PasswordHasher<ApplicationUser> ph = new PasswordHasher<ApplicationUser>();
+            appUser.PasswordHash = ph.HashPassword(appUser, "Password1!");
+
+            //seed user
+            modelBuilder.Entity<ApplicationUser>().HasData(appUser);
+
+            //set user role to admin
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = ROLE_ID,
+                UserId = USER_ID
             });
         }
     }

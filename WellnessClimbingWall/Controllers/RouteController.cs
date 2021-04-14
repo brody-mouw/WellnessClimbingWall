@@ -7,9 +7,11 @@ using WellnessClimbingWall.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WellnessClimbingWall.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WellnessClimbingWall.Controllers
 {
+    [Authorize]
     public class RouteController : Controller
     {
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WellnessClimbingWall.Data;
 
 namespace WellnessClimbingWall.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210407204216_aVisit")]
+    partial class aVisit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,15 +46,6 @@ namespace WellnessClimbingWall.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "36f39752-8f52-4773-928d-08ea117e8fb8",
-                            ConcurrencyStamp = "cb658d50-094d-4970-b7c6-c1790e7858f8",
-                            Name = "Administrators",
-                            NormalizedName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -138,13 +131,6 @@ namespace WellnessClimbingWall.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "0d37671f-42ff-48b4-a0c6-8ec88eb9539b",
-                            RoleId = "36f39752-8f52-4773-928d-08ea117e8fb8"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -229,21 +215,6 @@ namespace WellnessClimbingWall.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "0d37671f-42ff-48b4-a0c6-8ec88eb9539b",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "982f570a-af4a-4f53-8b85-d91d11f8b4b8",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEMdYKrAx4CZvn5BA5yC1I5EUay7soPLzrGe6DJC8b/hh63cuMyHKrQy4xSVSMkhJhg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "22926c44-bcc2-4584-af10-f86cae17af71",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("WellnessClimbingWall.Models.Patron", b =>
@@ -256,12 +227,18 @@ namespace WellnessClimbingWall.Migrations
                     b.Property<string>("Certifications")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
                     b.ToTable("Patron");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Patron");
                 });
 
             modelBuilder.Entity("WellnessClimbingWall.Models.Route", b =>
@@ -338,35 +315,16 @@ namespace WellnessClimbingWall.Migrations
 
             modelBuilder.Entity("WellnessClimbingWall.Models.Visit", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasBaseType("WellnessClimbingWall.Models.Patron");
 
-                    b.Property<string>("Certifications")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("timeIn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("timeOut")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Visit");
+                    b.HasDiscriminator().HasValue("Visit");
 
                     b.HasData(
                         new
                         {
                             ID = 112233,
                             Certifications = "Belay",
-                            Name = "Chester",
-                            timeIn = new DateTime(2021, 4, 13, 17, 39, 32, 631, DateTimeKind.Local).AddTicks(4672),
-                            timeOut = new DateTime(2021, 4, 13, 17, 39, 32, 634, DateTimeKind.Local).AddTicks(363)
+                            Name = "Chester"
                         });
                 });
 

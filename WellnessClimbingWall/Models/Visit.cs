@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 
 namespace WellnessClimbingWall.Models
 {
-    public class Visit : Patron
+    public class Visit
     {
-        public DateTime timeIn;
-        public DateTime timeOut;
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Certifications { get; set; }
+        public DateTime timeIn { get; set; }
+        public DateTime timeOut { get; set; }
     }
 }

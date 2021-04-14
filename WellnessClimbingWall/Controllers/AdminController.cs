@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BethanysPieShop.Controllers
 {
-   // [Authorize(Roles="Administrators")]
+   [Authorize(Roles="Administrators")]
     public class AdminController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

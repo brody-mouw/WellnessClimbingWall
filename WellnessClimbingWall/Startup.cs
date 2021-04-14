@@ -32,8 +32,9 @@ namespace WellnessClimbingWall
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddScoped<IRouteRepository, RouteRepository>();
-            services.AddScoped<IPatronRepository, PatronRepository>();
+            services.AddTransient<IRouteRepository, RouteRepository>();
+            services.AddTransient<IPatronRepository, PatronRepository>();
+            services.AddTransient<IVisitRepository, VisitRepository>();
 
             services.AddDbContext<AppDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -42,6 +43,8 @@ namespace WellnessClimbingWall
                 .AddEntityFrameworkStores<AppDbContext>();
 
             //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,9 +64,13 @@ namespace WellnessClimbingWall
             app.UseStaticFiles();
 
             app.UseRouting();
+           // DbInitializer.Seed(app);
 
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
+            
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
@@ -72,6 +79,8 @@ namespace WellnessClimbingWall
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+
         }
     }
 }
