@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WellnessClimbingWall.Models;
 using WellnessClimbingWall.ViewModels;
+using WellnessClimbingWall.Controllers;
+using WellnessClimbingWall.Data;
 
 namespace WellnessClimbingWall.Controllers
 {
@@ -16,6 +18,10 @@ namespace WellnessClimbingWall.Controllers
     public class ReportController : Controller
     {
         private readonly IPatronRepository _patronRepository;   //Does not need a report model
+        private readonly IVisitRepository _visitRepository;
+        private readonly AppDbContext _context;
+        public DateTime date1;
+        public DateTime date2;
 
         public ReportController(IPatronRepository patronRepository)
         {
@@ -32,11 +38,15 @@ namespace WellnessClimbingWall.Controllers
 
         public IActionResult Csv()
         {
+            Report report;
             var builder = new StringBuilder();
             builder.AppendLine("Name, Time in, Time out");
-            foreach(var name in Patron)
+            foreach(var name in _visitRepository.AllVisits)
             {
-                builder.AppendLine($"{name.name},{name.timein},{name.timeout}");
+                if(name.timeIn>=date1&&name.timeIn<=date2)
+                {
+                    builder.AppendLine($"{name.Name},{name.timeIn},{name.timeOut}");
+                }
             }
 
             return File(Encoding.UTF8.GetBytes(builder.ToString()),"text.csv","Report.csv");

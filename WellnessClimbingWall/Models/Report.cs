@@ -8,7 +8,7 @@ namespace WellnessClimbingWall.Models
 {
     public class Report
     {
-        public string date1 { get; set; }
-        public string date2 { get; set; }
+        public DateTime date1 { get; set; }
+        public DateTime date2 { get; set; }
     }
 }

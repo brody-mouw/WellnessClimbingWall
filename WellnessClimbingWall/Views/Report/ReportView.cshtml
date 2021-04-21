@@ -3,12 +3,12 @@
 <body style="background-color: #ededed">
     <br>
     <h2 style="text-align:Left">Generate Report with Date</h2>
-    <form style="color:black;text-align:center;" action="/LoginController.cs">
+    <form style="color:black;text-align:center;" asp-controller = "ReportController.cs" asp-action="">
         <br><label for="date1">Enter First Date:</label><br>
-        <input type="text" id="date1" name="date1"><br>
+        <input type="datetime-local" id="date1" name="date1"><br>
         <label for="date2">Enter Second Date:</label><br>
-        <input type="text" id="date2" name="date2"><br><br>
-        <input type="submit" value="Csv"><br><br>
+        <input type="datetime-local" id="date2" name="date2"><br><br>
+        <input type="submit" value="Submit"><br><br>
     </form>
 
 
