@@ -77,7 +77,8 @@ namespace WellnessClimbingWall.Data
 
             modelBuilder.Entity<Patron>().HasData(new Patron
             {
-                ID = 78932,
+                ID = 1,
+                BadgeNumber = 1234567,
                 Certifications = "None",
                 Name = "Miller Wallman",
             });
