@@ -75,6 +75,13 @@ namespace WellnessClimbingWall.Data
                 timeOut = DateTime.Now,
             });
 
+            modelBuilder.Entity<Patron>().HasData(new Patron
+            {
+                ID = 78932,
+                Certifications = "None",
+                Name = "Miller Wallman",
+            });
+
             var ROLE_ID = Guid.NewGuid().ToString();
             var USER_ID = Guid.NewGuid().ToString();
 
