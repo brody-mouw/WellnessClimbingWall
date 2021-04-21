@@ -39,7 +39,7 @@
                            id="patronTable">
                         <thead>
                             <tr>
-                                <th data-field="ID">ID</th>
+                                <th data-field="ID">Badge ID</th>
                                 <th data-field="Name">Name</th>
                                 <th data-field="Certs">Certifications</th>
                             </tr>
@@ -48,7 +48,7 @@
                             @foreach (Patron patron in Model.Patrons)
                             {
                                 <tr id="@patron.ID">    
-                                    <td>@patron.ID</td>
+                                    <td>@patron.BadgeNumber</td>
                                     <td>@patron.Name</td>
                                     <td>@patron.Certifications</td>
                                     <td>
@@ -93,7 +93,7 @@
            data-search="true">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>Badge Number</th>
                 <th>Name</th>
                 <th>Time In</th>
                 <th>Certifications</th>
