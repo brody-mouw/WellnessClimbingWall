@@ -12,25 +12,23 @@
     </button>
 </div>
 <div class="modal-body">
-    <div class="row">
-        <form asp-action="Add">
+    <form asp-action="Add">
+        <div class="form-group">
+            <label asp-for="BadgeNumber" class="control-label"></label>
+            <input asp-for="BadgeNumber" class="form-control" required />
+            <span asp-validation-for="BadgeNumber" class="text-danger"></span>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" required />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="modal-footer">
             <div class="form-group">
-                <label asp-for="BadgeNumber" class="control-label"></label>
-                <input asp-for="BadgeNumber" class="form-control" required />
-                <span asp-validation-for="BadgeNumber" class="text-danger"></span>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Save" />
             </div>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" required />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="modal-footer">
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save" />
-                </div>
-            </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

@@ -10,6 +10,7 @@ namespace WellnessClimbingWall.Models
     {
         public int ID { get; set; }
         [Range(1000000, 9999999)]
+        [Display(Name = "Badge Number")]
         public int BadgeNumber { get; set; }
         public string Name { get; set; }
         public string Certifications { get; set; }

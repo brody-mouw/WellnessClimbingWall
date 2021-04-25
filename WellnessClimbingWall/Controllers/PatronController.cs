@@ -80,7 +80,7 @@ namespace WellnessClimbingWall.Controllers
             {
                 return NotFound();
             }
-            return PartialView("EditPatron", patron);
+            return PartialView("_EditPatron", patron);
         }
 
         [HttpPost]
@@ -113,6 +113,21 @@ namespace WellnessClimbingWall.Controllers
             }
             return View(patron);
         }
+        public IActionResult Delete(int id)
+        {
+            var patron = _context.Patron.FirstOrDefault(m => m.ID == id);
+            _context.Patron.Remove(patron);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(PatronView));
+        }
+        /*[HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var patron = _context.Patron.FirstOrDefault(m => m.ID == id);
+            _context.Patron.Remove(patron);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(PatronView));
+        }*/
 
         private bool PatronExists(int id)
         {
