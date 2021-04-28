@@ -8,6 +8,7 @@ namespace WellnessClimbingWall.Models
     public class Visit
     {
         public int ID { get; set; }
+        public int studentID { get; set; }
         public string Name { get; set; }
         public string Certifications { get; set; }
         public DateTime timeIn { get; set; }
