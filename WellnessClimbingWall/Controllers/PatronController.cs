@@ -120,31 +120,27 @@ namespace WellnessClimbingWall.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(PatronView));
         }
-        /*[HttpPost]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            var patron = _context.Patron.FirstOrDefault(m => m.ID == id);
-            _context.Patron.Remove(patron);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(PatronView));
-        }*/
 
         private bool PatronExists(int id)
         {
             return _context.Patron.Any(e => e.ID == id);
         }
 
-        public void CheckOut(Patron patron, DateTime timeIn)
+        [HttpPost]
+        public void CheckOut(int id, DateTime timeIn)
         {
-            if (patron == null)
+            if (id == 0)
             {
                 throw new Exception("Patron does not exist");
             }
             else
             {
+                var patron = _context.Patron.FirstOrDefault(m => m.BadgeNumber == id);
                 Visit result = new Visit { Name = patron.Name, ID = patron.ID, Certifications = patron.Certifications, timeIn = timeIn };
                 result.timeOut = DateTime.Now;
                 //Save to Visit Database visitContext.Add(result)
+                _context.Visit.Update(result);
+                _context.SaveChanges();
             }
         }
     }
