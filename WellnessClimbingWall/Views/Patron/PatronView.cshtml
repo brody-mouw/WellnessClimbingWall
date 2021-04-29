@@ -161,15 +161,27 @@
             $('#' + BadgeNumber).hide();
 
             $('table[id="checkInList"]').append('<tr><td>' + BadgeNumber + '<td>' + Name + '<td>' + currentTime + '<td>' + Certs + '<td>'
-                //+ '<button class="btn btn-primary" asp-action="Edit" asp-route-id="patron.ID">Edit</button>'
+                + '<button class="btn btn-primary" data-toggle="ajax-modal" data-target="editPatron" data-url="">Edit</button>'
                 + '<button class="btn btn-danger remove" type="button"> Checkout </button>');
         });
 
 
         $('#checkInList').on("click", "button.remove", function () {
             ID = $(this).closest("tr").find("td:eq(0)").text();
+            timeIn = $(this).closest("tr").find("td:eq(2)").text();
             $('#' + ID).show();
             $(this).closest('tr').remove();
+            //$.ajax({
+                //type: "POST",
+                //url: '@Url.Action("CheckOut", "Patron")',
+                //data: {'id' : ID, 'timeIn': timeIn },
+                /*success: function () {
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });*/
         });
     </script>
 }
